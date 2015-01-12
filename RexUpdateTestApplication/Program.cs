@@ -16,11 +16,12 @@ namespace RexUpdateTestApplication
 
         static async void AsyncMain(string[] args)
         {
-            var u = new Updater("TestApplication", new Uri("http://localhost:12346/MyApp/"));
-            var cr = await u.CheckAsync("1.0.0");
+            var u = new Updater();
+            var cr = await u.CheckAsync("TestApplication", new Uri("http://localhost:12347/MyApp/"), "1.0.0");
             Console.Write(JsonConvert.SerializeObject(cr));
 
-            u.DownloadAndInstallOnExit(cr,@"M:\Rexson\Projects\RexUpdate\UpdateAgent\bin\Debug\UpdateAgent.exe");
+            u.DownloadAndInstallOnExit(cr);
+            Console.ReadKey();
         }
     }
 }

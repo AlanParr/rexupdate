@@ -1,15 +1,17 @@
-﻿namespace UpdateAgent
+﻿using System;
+
+namespace UpdateAgent
 {
     internal class AgentOptions
     {
         public AgentOptions(){}
-        public AgentOptions(string downloadUrl, int? processIdToWaitFor)
+        public AgentOptions(Uri downloadUri, int? processIdToWaitFor)
         {
-            DownloadUrl = downloadUrl;
+            DownloadUri = downloadUri;
             ProcessIdToWaitFor = processIdToWaitFor;
         }
 
-        public string DownloadUrl { get; private set; }
+        public Uri DownloadUri { get; private set; }
         public int? ProcessIdToWaitFor { get; private set; }
 
         public static AgentOptions FromArgs(string[] args)
@@ -20,7 +22,7 @@
                 switch (args[i])
                 {
                     case "-pkgurl":
-                        result.DownloadUrl = args[i + 1];
+                        result.DownloadUri = new Uri(args[i + 1]);
                         break;
                     case "-waitprocess":
                         result.ProcessIdToWaitFor = int.Parse(args[i + 1]);

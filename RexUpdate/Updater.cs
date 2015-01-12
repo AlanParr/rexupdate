@@ -61,7 +61,6 @@ namespace RexUpdate
 
             var process = Process.GetCurrentProcess();
 
-
             Process.Start(updateAgentPath, string.Format(argsMask, checkResult.DownloadUrl, process.Id));
         }
 
