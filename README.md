@@ -8,3 +8,4 @@ My stab at a simple application updater.
 
 ####TODO
 * Demo update server to replace current Linqpad script, most likely using Nancy.
+* Add dinosaur icon.
