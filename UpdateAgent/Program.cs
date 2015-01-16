@@ -1,4 +1,6 @@
-﻿namespace UpdateAgent
+﻿using System;
+
+namespace UpdateAgent
 {
     class Program
     {
@@ -6,6 +8,7 @@
         {
             var agent = new Agent(args);
             agent.Execute();
+            Console.ReadKey();
         }
     }
 }

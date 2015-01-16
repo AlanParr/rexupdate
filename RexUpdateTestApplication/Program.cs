@@ -20,7 +20,7 @@ namespace RexUpdateTestApplication
             var cr = await u.CheckAsync("TestApplication", new Uri("http://localhost:12347/MyApp/"), "1.0.0");
             Console.Write(JsonConvert.SerializeObject(cr));
 
-            u.DownloadAndInstallOnExit(cr);
+            u.DownloadAndInstallOnExit(cr, @"M:\Rexson\Projects\RexUpdate\UpdateAgent\bin\Debug\UpdateAgent.exe");
             Console.ReadKey();
         }
     }

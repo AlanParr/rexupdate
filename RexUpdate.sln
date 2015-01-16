@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RexUpdate", "RexUpdate\RexUpdate.csproj", "{58092A55-70E2-489E-801E-232933FE741A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RexUpdateTestApplication", "RexUpdateTestApplication\RexUpdateTestApplication.csproj", "{6E436CA0-751B-4E3A-B447-F6BCB86CE4D7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{49F1465A-00DE-49D4-9720-B597E57F35C0} = {49F1465A-00DE-49D4-9720-B597E57F35C0}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateAgent", "UpdateAgent\UpdateAgent.csproj", "{49F1465A-00DE-49D4-9720-B597E57F35C0}"
 EndProject

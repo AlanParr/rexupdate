@@ -60,8 +60,13 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>mkdir $(TargetDir)RexUpdate\
-copy $(SolutionDir)UpdateAgent\bin\Debug\ $(TargetDir)RexUpdate\</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>rmdir $(TargetDir)RexUpdate\ /S /Q
+mkdir $(TargetDir)RexUpdate\
+copy $(SolutionDir)UpdateAgent\bin\Debug\ $(TargetDir)RexUpdate\</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

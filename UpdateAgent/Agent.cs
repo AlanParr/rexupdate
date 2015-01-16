@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
+using System.Timers;
 using RexUpdate;
 
 namespace UpdateAgent
@@ -10,6 +12,7 @@ namespace UpdateAgent
     {
         private readonly AgentOptions _options;
         private readonly Updater _updater;
+        private System.Timers.Timer _timer;
         private bool _fileDownloaded;
         private readonly string _downloadPath = Path.Combine(Path.GetTempPath(), string.Format("rexupdate-{0}.rex",Guid.NewGuid()));
 
@@ -21,21 +24,40 @@ namespace UpdateAgent
 
         public void Execute()
         {
-            _updater.DownloadUpdateAsync(_options.DownloadUri, _downloadPath, DownloadCompleted);   
-            if (_options.ProcessIdToWaitFor.HasValue)
+            _updater.DownloadUpdateAsync(_options.DownloadUri, _downloadPath, DownloadCompleted);
+
+            _timer = new System.Timers.Timer(2000);
+            _timer.Elapsed += TimerOnElapsed;
+            _timer.Start();
+        }
+
+        private void TimerOnElapsed(object sender, ElapsedEventArgs elapsedEventArgs)
+        {
+            if (_options.ProcessIdToWaitFor.HasValue && ProcessRunning(_options.ProcessIdToWaitFor.Value))
             {
-                while (ProcessRunning(_options.ProcessIdToWaitFor.Value) && !_fileDownloaded)
-                {
-                    //Loop until the process exits and the file download has completed.
-                }
+                Console.WriteLine("Process {0} has not exited", _options.ProcessIdToWaitFor.Value);
+                return;
             }
-            
-            Console.WriteLine("Process {0} has exited, we can now update.",_options.ProcessIdToWaitFor);
+
+            if (!_fileDownloaded)
+            {
+                Console.WriteLine("File hasn't been downloaded.");
+                return;
+            }
+
+            Console.WriteLine("Process {0} has exited, we can now update.", _options.ProcessIdToWaitFor);
         }
 
         void DownloadCompleted(object sender, AsyncCompletedEventArgs args)
         {
-            _fileDownloaded = true;
+            if (args.Cancelled)
+            {
+                Console.WriteLine(args.Error.Message);
+            }
+            else
+            {
+                _fileDownloaded = true;
+            }
         }
 
         private static bool ProcessRunning(int processId)
